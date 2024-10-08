@@ -17,6 +17,7 @@ import List from "@mui/material/List";
 import Box from "@mui/material/Box";
 
 import AccountMenu from "@/components/AccountMenu";
+import { useAuth } from "../context/AuthContext";
 import {
   mainListItems,
   secondaryListItems,
@@ -77,6 +78,9 @@ export default function AdministrativePanel({ children }) {
     setOpen(!open);
   };
 
+  /*  */
+  const { user } = useAuth();
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: "flex" }}>
@@ -134,8 +138,12 @@ export default function AdministrativePanel({ children }) {
             {mainListItems}
             <Divider sx={{ my: 1 }} />
             {secondaryListItems}
-            <Divider sx={{ my: 1 }} />
-            {tertiaryListItems}
+            {user.isAdmin && (
+              <Fragment>
+                <Divider sx={{ my: 1 }} />
+                {tertiaryListItems}
+              </Fragment>
+            )}
           </List>
         </Drawer>
         <Box
